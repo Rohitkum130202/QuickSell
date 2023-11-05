@@ -10,7 +10,7 @@ import axios from "axios";
 const Navbar = () => {
   const [display, setDisplay] = useState(false);
   const [page, setPage] = useState("Status");
-  const [order, setOrder] = useState("Priority");
+  const [order, setOrder] = useState("Title");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,7 +53,7 @@ const Navbar = () => {
             <div className="navbar-dropdown-title">Grouping</div>
             <select
               className="navbar-dropdown-select"
-              onChange={(e) => {
+              onClick={(e) => {
                 setPage(e.target.value);
               }}
             >
@@ -77,9 +77,9 @@ const Navbar = () => {
         </div>
       )}
 
-      {data && page === "Status" && <Status data={data} />}
-      {data && page === "User" && <User data={data} />}
-      {data && page === "Priority" && <Priority data={data} />}
+      {data && page === "Status" && <Status data={data} order={order}/>}
+      {data && page === "User" && <User data={data} order={order}/>}
+      {data && page === "Priority" && <Priority data={data} order={order} />}
     </div>
   );
 };

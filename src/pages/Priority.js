@@ -12,7 +12,7 @@ import {
   PiCellSignalLowBold,
 } from "react-icons/pi";
 
-const Priority = ({ data }) => {
+const Priority = ({ data, order }) => {
   const [pData, setPData] = useState([
     {
       priority: "No priority",
@@ -43,7 +43,33 @@ const Priority = ({ data }) => {
 
   useEffect(() => {
     const filtedData = () => {
-      const fData = pData;
+      const fData = [
+        {
+          priority: "No priority",
+          num: 0,
+          data: [],
+        },
+        {
+          priority: "Low",
+          num: 1,
+          data: [],
+        },
+        {
+          priority: "Medium",
+          num: 2,
+          data: [],
+        },
+        {
+          priority: "High",
+          num: 3,
+          data: [],
+        },
+        {
+          priority: "Urgent",
+          num: 4,
+          data: [],
+        },
+      ];
 
       data.tickets.forEach((ticket) => {
         const { status, id, title, tag, priority } = ticket;
@@ -52,11 +78,15 @@ const Priority = ({ data }) => {
           fData[foundIndex].data.push({ id, title, tag: tag[0], priority });
         }
       });
+
+      fData.forEach((item) => {
+        item.data.sort((a, b) => (a.title > b.title ? 1 : -1));
+      });
       setPData(fData);
     };
 
     filtedData();
-  }, []);
+  }, [order]);
 
   return (
     <div className="page-container">

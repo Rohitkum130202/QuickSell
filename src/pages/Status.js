@@ -7,8 +7,8 @@ import { CgTimelapse } from "react-icons/cg";
 import { BsExclamationLg } from "react-icons/bs";
 import Card from "../components/Card";
 
-const Status = ({ data }) => {
-  // console.log(data);
+const Status = ({ data,order}) => {
+  // console.log(order);
   const [statusData, setStatusData] = useState( [
     {
       status: "Backlog",
@@ -34,7 +34,28 @@ const Status = ({ data }) => {
 
   useEffect(() => {
     const filtedData = () => {
-      const fData = statusData;
+      const fData =  [
+        {
+          status: "Backlog",
+          data: [],
+        },
+        {
+          status: "Todo",
+          data: [],
+        },
+        {
+          status: "In progress",
+          data: [],
+        },
+        {
+          status: "Done",
+          data: [],
+        },
+        {
+          status: "Canceled",
+          data: [],
+        },
+      ];
 
       data.tickets.forEach((ticket) => {
         const { status, id, title, tag, priority } = ticket;
@@ -43,11 +64,23 @@ const Status = ({ data }) => {
           fData[foundIndex].data.push({ id, title, tag: tag[0], priority });
         }
       });
+      //sort
+      if (order === "Title") {
+        fData.forEach((item) => {
+          item.data.sort((a, b) => (a.title > b.title ? 1 : -1));
+        });
+      }
+      else{
+        fData.forEach((item) => {
+          item.data.sort((a, b) => (a.priority > b.priority ? 1 : -1));
+        });
+      }
        setStatusData(fData);
+
     };
 
     filtedData();
-  }, []);
+  }, [order]);
 
   // console.log('====================================');
   console.log(statusData);
