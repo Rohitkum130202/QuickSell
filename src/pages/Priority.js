@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./page.css";
 import { GrAdd } from "react-icons/gr";
 import { SlOptions } from "react-icons/sl";
@@ -12,8 +12,52 @@ import {
   PiCellSignalLowBold,
 } from "react-icons/pi";
 
-const Priority = () => {
-  
+const Priority = ({ data }) => {
+  const [pData, setPData] = useState([
+    {
+      priority: "No priority",
+      num: 0,
+      data: [],
+    },
+    {
+      priority: "Low",
+      num: 1,
+      data: [],
+    },
+    {
+      priority: "Medium",
+      num: 2,
+      data: [],
+    },
+    {
+      priority: "High",
+      num: 3,
+      data: [],
+    },
+    {
+      priority: "Urgent",
+      num: 4,
+      data: [],
+    },
+  ]);
+
+  useEffect(() => {
+    const filtedData = () => {
+      const fData = pData;
+
+      data.tickets.forEach((ticket) => {
+        const { status, id, title, tag, priority } = ticket;
+        const foundIndex = fData.findIndex((item) => item.num === priority);
+        if (foundIndex !== -1) {
+          fData[foundIndex].data.push({ id, title, tag: tag[0], priority });
+        }
+      });
+      setPData(fData);
+    };
+
+    filtedData();
+  }, []);
+
   return (
     <div className="page-container">
       <div className="page-container-second">
@@ -23,8 +67,8 @@ const Priority = () => {
               <div className="page-container-item">
                 <SlOptions />
               </div>
-              <div className="page-container-item">No Priority</div>
-              <div className="page-container-item">2</div>
+              <div className="page-container-item">{pData[0].priority}</div>
+              <div className="page-container-item">{pData[0].data.length}</div>
             </div>
             <div className="page-container-group2">
               <div className="page-container-item">
@@ -35,17 +79,17 @@ const Priority = () => {
               </div>
             </div>
           </div>
-          {/* <Card />
-          <Card />
-          <Card /> */}
+          {pData[0].data.map((item, index) => {
+            return <Card key={index} data={item} />;
+          })}
         </div>
 
         <div className="page-container-head">
           <div className="page-container-subhead">
             <div className="page-container-group1">
               <div className="page-container-item">⚠️</div>
-              <div className="page-container-item">Urgent</div>
-              <div className="page-container-item">3</div>
+              <div className="page-container-item">{pData[1].priority}</div>
+              <div className="page-container-item">{pData[1].data.length}</div>
             </div>
             <div className="page-container-group2">
               <div className="page-container-item">
@@ -56,9 +100,9 @@ const Priority = () => {
               </div>
             </div>
           </div>
-          {/* <Card />
-          <Card />
-          <Card /> */}
+          {pData[1].data.map((item, index) => {
+            return <Card key={index} data={item} />;
+          })}
         </div>
 
         <div className="page-container-head">
@@ -67,8 +111,8 @@ const Priority = () => {
               <div className="page-container-item">
                 <PiCellSignalHighBold />
               </div>
-              <div className="page-container-item">High</div>
-              <div className="page-container-item">4</div>
+              <div className="page-container-item">{pData[2].priority}</div>
+              <div className="page-container-item">{pData[2].data.length}</div>
             </div>
             <div className="page-container-group2">
               <div className="page-container-item">
@@ -79,9 +123,9 @@ const Priority = () => {
               </div>
             </div>
           </div>
-          {/* <Card />
-          <Card />
-          <Card /> */}
+          {pData[2].data.map((item, index) => {
+            return <Card key={index} data={item} />;
+          })}
         </div>
 
         <div className="page-container-head">
@@ -90,8 +134,8 @@ const Priority = () => {
               <div className="page-container-item">
                 <PiCellSignalMediumBold />
               </div>
-              <div className="page-container-item">Medium</div>
-              <div className="page-container-item">1</div>
+              <div className="page-container-item">{pData[3].priority}</div>
+              <div className="page-container-item">{pData[3].data.length}</div>
             </div>
             <div className="page-container-group2">
               <div className="page-container-item">
@@ -102,9 +146,9 @@ const Priority = () => {
               </div>
             </div>
           </div>
-          {/* <Card />
-          <Card />
-          <Card /> */}
+          {pData[3].data.map((item, index) => {
+            return <Card key={index} data={item} />;
+          })}
         </div>
 
         <div className="page-container-head">
@@ -113,8 +157,8 @@ const Priority = () => {
               <div className="page-container-item">
                 <PiCellSignalLowBold />
               </div>
-              <div className="page-container-item">Low</div>
-              <div className="page-container-item">6</div>
+              <div className="page-container-item">{pData[4].priority}</div>
+              <div className="page-container-item">{pData[4].data.length}</div>
             </div>
             <div className="page-container-group2">
               <div className="page-container-item">
@@ -125,9 +169,9 @@ const Priority = () => {
               </div>
             </div>
           </div>
-          {/* <Card />
-          <Card />
-          <Card /> */}
+          {pData[4].data.map((item, index) => {
+            return <Card key={index} data={item} />;
+          })}
         </div>
       </div>
     </div>
