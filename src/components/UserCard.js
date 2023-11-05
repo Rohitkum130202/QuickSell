@@ -9,7 +9,7 @@ import Card from "../components/Card";
 import { TbUserCircle } from "react-icons/tb";
 import { FaUserAlt } from "react-icons/fa";
 
-const UserCard = () => {
+const UserCard = ({ userData }) => {
   return (
     <div className="page-container-head">
       <div className="page-container-subhead">
@@ -17,8 +17,8 @@ const UserCard = () => {
           <div className="page-container-item">
             <FaUserAlt />
           </div>
-          <div className="page-container-item">Akash</div>
-          <div className="page-container-item">2</div>
+          <div className="page-container-item">{userData.name}</div>
+          <div className="page-container-item">{userData.data.length}</div>
         </div>
         <div className="page-container-group2">
           <div className="page-container-item">
@@ -29,9 +29,9 @@ const UserCard = () => {
           </div>
         </div>
       </div>
-      <Card />
-      <Card />
-      <Card />
+      {userData.data.map((item, index) => {
+        return <Card key={index} data={item} />;
+      })}
     </div>
   );
 };
