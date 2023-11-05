@@ -30,6 +30,14 @@ const Navbar = () => {
     fetchData();
   }, []);
 
+  const handlePageChange=(e)=>{
+    setPage(e.target.value);
+  }
+
+  const handleOrderChange=(e)=>{
+    setOrder(e.target.value);
+  }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -53,9 +61,7 @@ const Navbar = () => {
             <div className="navbar-dropdown-title">Grouping</div>
             <select
               className="navbar-dropdown-select"
-              onClick={(e) => {
-                setPage(e.target.value);
-              }}
+              onClick={handlePageChange}
             >
               <option value="Status">Status</option>
               <option value="Priority">Priority</option>
@@ -66,9 +72,7 @@ const Navbar = () => {
             <div className="navbar-dropdown-title">Ordering</div>
             <select
               className="navbar-dropdown-select"
-              onChange={(e) => {
-                setOrder(e.target.value);
-              }}
+              onChange={handleOrderChange}
             >
               <option value="Priority">Priority</option>
               <option value="Title">Title</option>
